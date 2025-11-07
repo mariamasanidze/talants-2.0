@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Nebula Design System - Cosmic Theme
+All colors are HSL for maximum flexibility and theming support.
+*/
+
+@layer base {
+  :root {
+    /* Company Brand Colors */
+    --background: 213 46% 19%;  /* Dark navy */
+    --foreground: 27 100% 96%; /* Light cream */
+    
+    /* Surface Colors */
+    --card: 213 40% 25%;        /* Slightly lighter navy */
+    --card-foreground: 27 100% 96%;
+    
+    --popover: 213 40% 25%;
+    --popover-foreground: 27 100% 96%;
+    
+    /* Primary - Company Orange */
+    --primary: 19 65% 59%;   /* Company orange */
+    --primary-foreground: 27 100% 96%;
+    
+    /* Secondary - Company Blue */
+    --secondary: 204 58% 46%;  /* Company blue */
+    --secondary-foreground: 27 100% 96%;
+    
+    /* Muted Surfaces */
+    --muted: 213 35% 30%;      /* Muted navy */
+    --muted-foreground: 27 50% 80%;
+    
+    /* Accent - Company Blue */
+    --accent: 204 58% 46%;    /* Company blue */
+    --accent-foreground: 27 100% 96%;
+    
+    /* Destructive */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 27 100% 96%;
+    
+    /* Borders and Inputs */
+    --border: 213 30% 35%;     /* Lighter navy for borders */
+    --input: 213 40% 22%;      /* Dark navy for inputs */
+    --ring: 19 65% 59%;      /* Company orange for focus */
+    
+    /* Design tokens */
+    --radius: 0.75rem;
+    
+    /* Company Brand Gradients */
+    --gradient-nebula: linear-gradient(135deg, hsl(19 65% 59%) 0%, hsl(204 58% 46%) 100%);
+    --gradient-cosmic: linear-gradient(90deg, hsl(213 46% 19%) 0%, hsl(213 40% 25%) 50%, hsl(19 65% 59%) 100%);
+    --gradient-glow: radial-gradient(circle at center, hsl(19 65% 59% / 0.3) 0%, transparent 70%);
+    
+    /* Glow Effects */
+    --glow-primary: 0 0 20px hsl(19 65% 59% / 0.5);
+    --glow-accent: 0 0 20px hsl(204 58% 46% / 0.5);
+    --glow-soft: 0 0 40px hsl(19 65% 59% / 0.2);
+    
+    /* Animation Durations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .light {
+    /* Light mode - Company colors adjusted */
+    --background: 27 100% 96%;  /* Light cream background */
+    --foreground: 213 46% 19%;  /* Dark navy text */
+    
+    --card: 27 80% 92%;         /* Slightly darker cream */
+    --card-foreground: 213 46% 19%;
+    
+    --popover: 27 80% 92%;
+    --popover-foreground: 213 46% 19%;
+    
+    --primary: 19 65% 55%;      /* Slightly darker orange for better contrast */
+    --primary-foreground: 27 100% 96%;
+    
+    --secondary: 204 58% 40%;   /* Darker blue for light mode */
+    --secondary-foreground: 27 100% 96%;
+    
+    --muted: 27 60% 88%;        /* Light muted cream */
+    --muted-foreground: 213 40% 30%;
+    
+    --accent: 204 58% 40%;      /* Company blue */
+    --accent-foreground: 27 100% 96%;
+    
+    --destructive: 0 85% 50%;
+    --destructive-foreground: 27 100% 96%;
+    
+    --border: 27 40% 85%;       /* Light border */
+    --input: 27 60% 90%;        /* Light input background */
+    --ring: 19 65% 55%;         /* Company orange focus */
+    
+    /* Light mode gradients */
+    --gradient-nebula: linear-gradient(135deg, hsl(19 65% 55%) 0%, hsl(204 58% 40%) 100%);
+    --gradient-cosmic: linear-gradient(90deg, hsl(27 100% 96%) 0%, hsl(27 80% 92%) 50%, hsl(19 65% 55%) 100%);
+    --gradient-glow: radial-gradient(circle at center, hsl(19 65% 55% / 0.2) 0%, transparent 70%);
+    
+    --glow-primary: 0 0 20px hsl(19 65% 55% / 0.3);
+    --glow-accent: 0 0 20px hsl(204 58% 40% / 0.3);
+    --glow-soft: 0 0 40px hsl(19 65% 55% / 0.1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Tomorrow', sans-serif;
+    background: var(--gradient-cosmic);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Cosmic Components */
+  .cosmic-gradient {
+    background: var(--gradient-cosmic);
+  }
+  
+  .nebula-gradient {
+    background: var(--gradient-nebula);
+  }
+  
+  .glow-effect {
+    box-shadow: var(--glow-soft);
+  }
+  
+  .glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+  
+  .glow-accent {
+    box-shadow: var(--glow-accent);
+  }
+  
+  /* Button glowing effects */
+  .btn-cosmic {
+    @apply relative overflow-hidden transition-all duration-300;
+    background: var(--gradient-nebula);
+    box-shadow: var(--glow-primary);
+  }
+  
+  .btn-cosmic:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-primary), 0 10px 25px hsl(19 65% 59% / 0.3);
+  }
+  
+  .btn-cosmic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(19 65% 59% / 0.4), transparent);
+    transition: left 0.5s;
+  }
+  
+  .btn-cosmic:hover::before {
+    left: 100%;
+  }
+  
+  /* Card cosmic styling */
+  .cosmic-card {
+    @apply bg-card border border-border backdrop-blur-sm;
+    background: hsl(var(--card) / 0.8);
+    box-shadow: 0 8px 32px hsl(19 65% 59% / 0.1);
+  }
+  
+  .cosmic-card:hover {
+    @apply transition-all duration-300;
+    box-shadow: 0 12px 40px hsl(19 65% 59% / 0.2);
+    transform: translateY(-4px);
+  }
+  
+  /* Text glow effects */
+  .text-glow {
+    text-shadow: 0 0 10px currentColor;
+  }
+  
+  .text-glow-lg {
+    text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+  
+  /* Particle container */
+  .particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 1;
+    box-shadow: var(--glow-soft);
+  }
+  50% { 
+    opacity: 0.8;
+    box-shadow: var(--glow-primary);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
