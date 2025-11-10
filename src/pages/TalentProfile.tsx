@@ -21,6 +21,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { talentsAPI } from "@/services/endpoints";
 
+
 // import { fetchTalentById } from '@/services/api';
 
 const TalentProfile = () => {

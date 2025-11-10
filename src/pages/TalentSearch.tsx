@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Users } from 'lucide-react';
-import { fetchTalents } from '@/services/api';
+import { fetchTalents } from "@/services/endpoints";
 import { Talent, TalentFilters } from '@/types';
 import { TalentCard } from '@/components/common/TalentCard';
 import { EmptyState } from '@/components/common/EmptyState';
@@ -33,7 +33,9 @@ const TalentSearch = () => {
       setLoading(true);
       setError(null);
       const response = await fetchTalents(filters);
-      setTalents(response.data);
+const data = (response.data as any).results || response.data;
+setTalents(data as Talent[]);
+
     } catch (error) {
       console.error('Failed to load talents:', error);
       setError('Failed to load talents. Please try again.');
@@ -89,10 +91,8 @@ const TalentSearch = () => {
 
 
         </motion.div>
-
-        {/* Main Content - Filters on Left, Results on Right */}
         <div className="grid lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
+       
           <motion.div
             className="lg:col-span-1"
             initial={{ opacity: 0, x: -20 }}
@@ -108,7 +108,7 @@ const TalentSearch = () => {
             />
           </motion.div>
 
-          {/* Results */}
+         
           <div className="lg:col-span-3">
             {loading ? (
               <div className="flex justify-center py-12">

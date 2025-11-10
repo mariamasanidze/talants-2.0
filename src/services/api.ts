@@ -191,10 +191,6 @@
 
 
 import axios from "axios";
-
-// ============================================================================
-// AXIOS INSTANCE — BASE SETUP
-// ============================================================================
 export const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api/v1",
   headers: {
@@ -202,9 +198,7 @@ export const API = axios.create({
   },
 });
 
-// ============================================================================
-// REQUEST INTERCEPTOR — ADD AUTH TOKEN
-// ============================================================================
+
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("access");
   if (token) {
@@ -212,6 +206,12 @@ API.interceptors.request.use((config) => {
   }
   return config;
 });
+
+
+export const fetchTalents = async (filters: any) => {
+  return API.get('/talents/', { params: filters });
+};
+
 
 // ============================================================================
 // RESPONSE INTERCEPTOR — TOKEN REFRESH + ERROR HANDLING
@@ -285,4 +285,3 @@ const newAccessToken = response.data.access;
 );
 
 export default API;
-export const fetchTalents = () => API.get("/talents/");
