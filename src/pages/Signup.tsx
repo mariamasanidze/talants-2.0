@@ -1,56 +1,93 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, ArrowRight, User, Building, Check } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff, ArrowRight, Building, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { authAPI } from "@/services/endpoints";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    userType: 'employer',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    company: '',
-    jobTitle: '',
-    country: '',
-    agreeToTerms: false
+    userType: "employer",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    company: "",
+    jobTitle: "",
+    country: "",
+    agreeToTerms: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-    
-    if (!formData.agreeToTerms) {
-      alert('Please agree to the terms and conditions');
+      toast({
+        title: "Error",
+        description: "Passwords do not match.",
+        variant: "destructive",
+      });
       return;
     }
 
-    // Mock signup - redirect to employer dashboard
-    navigate('/employer-dashboard');
+    if (!formData.agreeToTerms) {
+      toast({
+        title: "Error",
+        description: "Please agree to the terms and conditions.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const response = await authAPI.register({
+        email: formData.email,
+        password: formData.password,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+      });
+
+      toast({
+        title: "Success",
+        description: "Account created successfully!",
+      });
+
+      console.log("✅ Registration successful:", response.data);
+      navigate("/employer-dashboard");
+    } catch (error: any) {
+      console.error("❌ Registration failed:", error);
+      toast({
+        title: "Registration failed",
+        description:
+          error.response?.data?.detail || "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
+
   const benefits = [
-    'Access to 50,000+ verified talents',
-    'AI-powered skill matching',
-    'Secure payment processing',
-    'Global talent network',
-    'Priority support'
+    "Access to 50,000+ verified talents",
+    "AI-powered skill matching",
+    "Secure payment processing",
+    "Global talent network",
+    "Priority support",
   ];
 
+  
   return (
     <div className="min-h-screen py-8">
       <div className="max-w-6xl mx-auto px-4">
@@ -59,7 +96,7 @@ const Signup = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {/* Header */}
+       
           <div className="text-center mb-8">
             <h1 className="text-4xl font-cosmic font-bold bg-gradient-nebula bg-clip-text text-transparent mb-2">
               Join Nebula
@@ -70,7 +107,7 @@ const Signup = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Benefits Section */}
+           
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -103,7 +140,7 @@ const Signup = () => {
                       Ready to get started?
                     </h3>
                     <p className="text-white/80 text-sm">
-                      Join thousands of companies and professionals who trust Nebula 
+                      Join thousands of companies and professionals who trust Nebula
                       for their talent acquisition needs.
                     </p>
                   </div>
@@ -111,7 +148,7 @@ const Signup = () => {
               </Card>
             </motion.div>
 
-            {/* Signup Form */}
+           
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -132,144 +169,173 @@ const Signup = () => {
                     </p>
                   </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                      {/* Personal Information */}
-                      <div className="grid grid-cols-2 gap-4">
-                        <Input
-                          placeholder="First Name"
-                          value={formData.firstName}
-                          onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                          required
-                        />
-                        <Input
-                          placeholder="Last Name"
-                          value={formData.lastName}
-                          onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                          required
-                        />
-                      </div>
-
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    
+                    <div className="grid grid-cols-2 gap-4">
                       <Input
-                        type="email"
-                        placeholder="Email address"
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        required
-                      />
-
-                      {/* Company Information */}
-                      <Input
-                        placeholder="Company Name"
-                        value={formData.company}
-                        onChange={(e) => setFormData({...formData, company: e.target.value})}
+                        placeholder="First Name"
+                        value={formData.firstName}
+                        onChange={(e) =>
+                          setFormData({ ...formData, firstName: e.target.value })
+                        }
                         required
                       />
                       <Input
-                        placeholder="Job Title"
-                        value={formData.jobTitle}
-                        onChange={(e) => setFormData({...formData, jobTitle: e.target.value})}
+                        placeholder="Last Name"
+                        value={formData.lastName}
+                        onChange={(e) =>
+                          setFormData({ ...formData, lastName: e.target.value })
+                        }
                         required
                       />
-
-                      <Select value={formData.country} onValueChange={(value) => setFormData({...formData, country: value})}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select your country" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="us">United States</SelectItem>
-                          <SelectItem value="uk">United Kingdom</SelectItem>
-                          <SelectItem value="ca">Canada</SelectItem>
-                          <SelectItem value="au">Australia</SelectItem>
-                          <SelectItem value="de">Germany</SelectItem>
-                          <SelectItem value="fr">France</SelectItem>
-                          <SelectItem value="ge">Georgia</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-
-                      {/* Password */}
-                      <div className="relative">
-                        <Input
-                          type={showPassword ? 'text' : 'password'}
-                          placeholder="Password"
-                          value={formData.password}
-                          onChange={(e) => setFormData({...formData, password: e.target.value})}
-                          required
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
-                          onClick={() => setShowPassword(!showPassword)}
-                        >
-                          {showPassword ? (
-                            <EyeOff className="w-4 h-4" />
-                          ) : (
-                            <Eye className="w-4 h-4" />
-                          )}
-                        </Button>
-                      </div>
-
-                      <div className="relative">
-                        <Input
-                          type={showConfirmPassword ? 'text' : 'password'}
-                          placeholder="Confirm Password"
-                          value={formData.confirmPassword}
-                          onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                          required
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        >
-                          {showConfirmPassword ? (
-                            <EyeOff className="w-4 h-4" />
-                          ) : (
-                            <Eye className="w-4 h-4" />
-                          )}
-                        </Button>
-                      </div>
-
-                      {/* Terms Agreement */}
-                      <div className="flex items-start gap-2">
-                        <input
-                          type="checkbox"
-                          id="terms"
-                          className="rounded mt-1"
-                          checked={formData.agreeToTerms}
-                          onChange={(e) => setFormData({...formData, agreeToTerms: e.target.checked})}
-                          required
-                        />
-                        <label htmlFor="terms" className="text-sm text-muted-foreground">
-                          I agree to the{' '}
-                          <Link to="/terms" className="text-primary hover:underline">
-                            Terms of Service
-                          </Link>{' '}
-                          and{' '}
-                          <Link to="/privacy" className="text-primary hover:underline">
-                            Privacy Policy
-                          </Link>
-                        </label>
-                      </div>
-
-                      <Button type="submit" variant="cosmic" className="w-full group">
-                        Create Account
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </form>
-
-                    <div className="text-center text-sm mt-6">
-                      <p className="text-muted-foreground">
-                        Already have an account?{' '}
-                        <Link to="/login" className="text-primary hover:underline">
-                          Sign in
-                        </Link>
-                      </p>
                     </div>
+
+                    <Input
+                      type="email"
+                      placeholder="Email address"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      required
+                    />
+
+                    
+                    <Input
+                      placeholder="Company Name"
+                      value={formData.company}
+                      onChange={(e) =>
+                        setFormData({ ...formData, company: e.target.value })
+                      }
+                      required
+                    />
+                    <Input
+                      placeholder="Job Title"
+                      value={formData.jobTitle}
+                      onChange={(e) =>
+                        setFormData({ ...formData, jobTitle: e.target.value })
+                      }
+                      required
+                    />
+
+                    <Select
+                      value={formData.country}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, country: value })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your country" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="us">United States</SelectItem>
+                        <SelectItem value="uk">United Kingdom</SelectItem>
+                        <SelectItem value="ca">Canada</SelectItem>
+                        <SelectItem value="au">Australia</SelectItem>
+                        <SelectItem value="de">Germany</SelectItem>
+                        <SelectItem value="fr">France</SelectItem>
+                        <SelectItem value="ge">Georgia</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                  
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={(e) =>
+                          setFormData({ ...formData, password: e.target.value })
+                        }
+                        required
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="w-4 h-4" />
+                        ) : (
+                          <Eye className="w-4 h-4" />
+                        )}
+                      </Button>
+                    </div>
+
+                    <div className="relative">
+                      <Input
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder="Confirm Password"
+                        value={formData.confirmPassword}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            confirmPassword: e.target.value,
+                          })
+                        }
+                        required
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      >
+                        {showConfirmPassword ? (
+                          <EyeOff className="w-4 h-4" />
+                        ) : (
+                          <Eye className="w-4 h-4" />
+                        )}
+                      </Button>
+                    </div>
+
+                    
+                    <div className="flex items-start gap-2">
+                      <input
+                        type="checkbox"
+                        id="terms"
+                        className="rounded mt-1"
+                        checked={formData.agreeToTerms}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            agreeToTerms: e.target.checked,
+                          })
+                        }
+                        required
+                      />
+                      <label htmlFor="terms" className="text-sm text-muted-foreground">
+                        I agree to the{" "}
+                        <Link to="/terms" className="text-primary hover:underline">
+                          Terms of Service
+                        </Link>{" "}
+                        and{" "}
+                        <Link to="/privacy" className="text-primary hover:underline">
+                          Privacy Policy
+                        </Link>
+                      </label>
+                    </div>
+
+                    <Button type="submit" variant="cosmic" className="w-full group">
+                      Create Account
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </form>
+
+                  <div className="text-center text-sm mt-6">
+                    <p className="text-muted-foreground">
+                      Already have an account?{" "}
+                      <Link to="/login" className="text-primary hover:underline">
+                        Sign in
+                      </Link>
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -278,7 +344,6 @@ const Signup = () => {
       </div>
     </div>
   );
-
 };
 
 export default Signup;

@@ -7,15 +7,23 @@ import { Talent, Company, DashboardStats, TestResult, APIResponse } from "@/type
 // ===============================================================
 // AUTH
 // ===============================================================
+// export const authAPI = {
+//   login: (data: { email: string; password: string }) =>
+//     API.post<{ access: string; refresh: string }>("/auth/login/", data),
+
+//   refresh: (data: { refresh: string }) => API.post("/auth/refresh/", data),
+//   me: () => API.get("/auth/me/"),
+//   changePassword: (data: { old_password: string; new_password: string }) =>
+//     API.put("/auth/change-password/", data),
+// };
 export const authAPI = {
+  register: (data: { email: string; password: string; first_name?: string; last_name?: string }) =>
+  API.post("/api/v1/auth/register/", data),
+
   login: (data: { email: string; password: string }) =>
     API.post<{ access: string; refresh: string }>("/auth/login/", data),
-
-  refresh: (data: { refresh: string }) => API.post("/auth/refresh/", data),
-  me: () => API.get("/auth/me/"),
-  changePassword: (data: { old_password: string; new_password: string }) =>
-    API.put("/auth/change-password/", data),
 };
+
 
 // ===============================================================
 // COMPANIES

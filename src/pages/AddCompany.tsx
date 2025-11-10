@@ -290,4 +290,5 @@ const AddCompany = () => {
   );
 };
 
+
 export default AddCompany;
