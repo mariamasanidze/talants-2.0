@@ -305,6 +305,7 @@
 
 // export default Navigation;
 
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -326,7 +327,7 @@ const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ Keep auth state updated instantly (no refresh)
+  // ✅ Keep auth state synced in real-time
   useEffect(() => {
     const handleAuthChange = () => {
       setIsAuthenticated(!!localStorage.getItem('access'));
@@ -347,6 +348,7 @@ const Navigation = () => {
         if (error?.response?.status === 401) {
           localStorage.removeItem('access');
           localStorage.removeItem('refresh');
+          localStorage.removeItem('shortlistedTalents');
           setIsAuthenticated(false);
           navigate('/login');
         }
@@ -369,14 +371,16 @@ const Navigation = () => {
     } finally {
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
+      localStorage.removeItem('shortlistedTalents'); // ✅ clear shortlist
       setIsAuthenticated(false);
       navigate('/');
     }
   };
 
-  //  Show full menu before login, and only Find Talent + Contact after login
+  // ✅ Dynamic nav links
   const navLinks = isAuthenticated
     ? [
+        { key: 'dashboard', href: '/employer-dashboard', label: 'Dashboard' },
         { key: 'findTalent', href: '/talent-search', label: t('nav.findTalent') },
         { key: 'contact', href: '/contact', label: t('nav.contact') },
       ]
