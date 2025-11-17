@@ -45,35 +45,69 @@ const TypingAnimation = ({
     return () => clearTimeout(initialTimer);
   }, [text, typingSpeed, initialDelay]);
 
-  return (
-    <span className={className}>
-      {showInitialDots ? (
-        <span className="flex items-center">
-          <span className="mr-1">...</span>
+  // return (
+  //   <span className={className}>
+  //     {showInitialDots ? (
+  //       <span className="flex items-center">
+  //         <span className="mr-1">...</span>
+  //         <motion.span
+  //           animate={{ opacity: [1, 0, 1] }}
+  //           transition={{ duration: 1, repeat: Infinity }}
+  //           className="text-primary"
+  //         >
+  //           |
+  //         </motion.span>
+  //       </span>
+  //     ) : (
+  //       <>
+  //         {displayText}
+  //         {showCursor && (
+  //           <motion.span
+  //             animate={{ opacity: [1, 0, 1] }}
+  //             transition={{ duration: 0.8, repeat: Infinity }}
+  //             className="text-primary ml-1"
+  //           >
+  //             |
+  //           </motion.span>
+  //         )}
+  //       </>
+  //     )}
+  //   </span>
+  // );
+
+return (
+  <span 
+    className={`${className} inline-block leading-[1.35] overflow-visible align-top`}
+  >
+    {showInitialDots ? (
+      <span className="flex items-center">
+        <span className="mr-1">...</span>
+        <motion.span
+          animate={{ opacity: [1, 0, 1] }}
+          transition={{ duration: 1, repeat: Infinity }}
+          className="text-primary"
+        >
+          |
+        </motion.span>
+      </span>
+    ) : (
+      <>
+        {displayText}
+        {showCursor && (
           <motion.span
             animate={{ opacity: [1, 0, 1] }}
-            transition={{ duration: 1, repeat: Infinity }}
-            className="text-primary"
+            transition={{ duration: 0.8, repeat: Infinity }}
+            className="text-primary ml-1"
           >
             |
           </motion.span>
-        </span>
-      ) : (
-        <>
-          {displayText}
-          {showCursor && (
-            <motion.span
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
-              className="text-primary ml-1"
-            >
-              |
-            </motion.span>
-          )}
-        </>
-      )}
-    </span>
-  );
+        )}
+      </>
+    )}
+  </span>
+);
+
+
 };
 
 export default TypingAnimation;

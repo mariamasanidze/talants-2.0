@@ -124,12 +124,135 @@
 //before mock data
 
 
+
+
+// import { useState } from "react";
+// import { motion } from "framer-motion";
+// import { Card, CardContent } from "@/components/ui/card";
+// import { Button } from "@/components/ui/button";
+// import { Badge } from "@/components/ui/badge";
+// import { Talent } from "@/types";
+// import { useNavigate } from "react-router-dom";
+
+// interface TalentCardProps {
+//   talent: Talent;
+//   index: number;
+// }
+
+// export const TalentCard = ({ talent, index }: TalentCardProps) => {
+//   const navigate = useNavigate();
+
+//   const [shortlisted, setShortlisted] = useState<boolean>(() => {
+//     const saved = JSON.parse(localStorage.getItem("shortlistedTalents") || "[]");
+//     return saved.some((t: Talent) => t.id === talent.id);
+//   });
+
+//   const handleShortlist = () => {
+//     // ✅ 1. Check login
+//     const token = localStorage.getItem("access");
+//     // if (!token) {
+//     //   navigate("/login?message=Please log in first to shortlist talents");
+//     //   return;
+//     // }
+// if (!token) {
+//   localStorage.setItem("pendingShortlist", talent.id); // ⭐ remember which talent user wanted
+//   navigate("/login?message=Please log in first to shortlist talents");
+//   return;
+// }
+
+//     // ✅ 2. Normal shortlist logic (unchanged)
+//     const saved = JSON.parse(localStorage.getItem("shortlistedTalents") || "[]");
+
+//     if (!shortlisted) {
+//       const updated = [...saved, talent];
+//       localStorage.setItem("shortlistedTalents", JSON.stringify(updated));
+//       setShortlisted(true);
+//     } else {
+//       const updated = saved.filter((t: Talent) => t.id !== talent.id);
+//       localStorage.setItem("shortlistedTalents", JSON.stringify(updated));
+//       setShortlisted(false);
+//     }
+//   };
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 20 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       transition={{ duration: 0.5, delay: index * 0.05 }}
+//     >
+//       <Card
+//         className="
+//           !bg-gradient-to-br !from-[#0F172A] !to-[#1E293B] 
+//           !border !border-slate-700 
+//           hover:!border-blue-400 
+//           !text-white 
+//           !shadow-md hover:!shadow-blue-500/20 
+//           transition-all duration-300 rounded-2xl
+//         "
+//       >
+//         <CardContent className="p-6 space-y-4">
+//           <div className="flex justify-between items-center">
+//             <h3 className="text-lg font-bold text-blue-300">
+//               {talent.candidateNumber}
+//             </h3>
+//             <span className="text-sm text-slate-300">
+//               {talent.seniority} • {talent.yearsExperience} yrs
+//             </span>
+//           </div>
+
+//           <p className="text-sm text-slate-400">{talent.location}</p>
+
+//           <p className="text-sm text-slate-200 leading-relaxed">
+//             {talent.lastProject}
+//           </p>
+
+//           {Array.isArray(talent.skills) && (
+//             <div className="flex flex-wrap gap-2 mt-3">
+//               {talent.skills.slice(0, 4).map((s, i) => (
+//                 <Badge
+//                   key={i}
+//                   variant="outline"
+//                   className="text-blue-200 border-blue-600/40 bg-blue-900/30 hover:bg-blue-800/40 transition"
+//                 >
+//                   {typeof s === "string" ? s : s.name}
+//                 </Badge>
+//               ))}
+//             </div>
+//           )}
+
+//           <div className="flex justify-between items-center pt-4">
+//             <span className="text-sm font-semibold text-blue-400">
+//               ${talent.salaryRange.min.toLocaleString()} – $
+//               {talent.salaryRange.max.toLocaleString()}
+//             </span>
+
+//             <Button
+//               size="sm"
+//               onClick={handleShortlist}
+//               className={`px-4 py-1 text-sm font-semibold rounded-md shadow-md transition-all duration-300 
+//                 ${
+//                   shortlisted
+//                     ? "bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white"
+//                     : "bg-gradient-to-r from-[#1E40AF] to-[#2563EB] hover:from-[#2563EB] hover:to-[#3B82F6] text-white"
+//                 }`}
+//             >
+//               {shortlisted ? "Shortlisted" : "Shortlist"}
+//             </Button>
+//           </div>
+//         </CardContent>
+//       </Card>
+//     </motion.div>
+//   );
+// };
+
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Talent } from "@/types";
+import { useNavigate } from "react-router-dom";
 
 interface TalentCardProps {
   talent: Talent;
@@ -137,12 +260,26 @@ interface TalentCardProps {
 }
 
 export const TalentCard = ({ talent, index }: TalentCardProps) => {
+  const navigate = useNavigate();
+
   const [shortlisted, setShortlisted] = useState<boolean>(() => {
     const saved = JSON.parse(localStorage.getItem("shortlistedTalents") || "[]");
     return saved.some((t: Talent) => t.id === talent.id);
   });
 
   const handleShortlist = () => {
+    const token = localStorage.getItem("access"); // Check if logged in
+
+    if (!token) {
+      // ⭐ Save the talent the user tried to shortlist BEFORE redirecting
+      localStorage.setItem("pendingShortlist", talent.id);
+      localStorage.setItem("pendingShortlistData", JSON.stringify(talent));
+
+      navigate("/login?message=Please log in first to shortlist talents");
+      return;
+    }
+
+    // If logged in → normal shortlist behavior
     const saved = JSON.parse(localStorage.getItem("shortlistedTalents") || "[]");
 
     if (!shortlisted) {
@@ -164,11 +301,11 @@ export const TalentCard = ({ talent, index }: TalentCardProps) => {
     >
       <Card
         className="
-          !bg-gradient-to-br !from-[#0F172A] !to-[#1E293B] 
+          !bg-gradient-to-br !from-[#0F172A] !to-[#1E293B]
           !border !border-slate-700 
-          hover:!border-blue-400 
-          !text-white 
-          !shadow-md hover:!shadow-blue-500/20 
+          hover:!border-blue-400
+          !text-white
+          !shadow-md hover:!shadow-blue-500/20
           transition-all duration-300 rounded-2xl
         "
       >
@@ -204,16 +341,18 @@ export const TalentCard = ({ talent, index }: TalentCardProps) => {
 
           <div className="flex justify-between items-center pt-4">
             <span className="text-sm font-semibold text-blue-400">
-              ${talent.salaryRange.min.toLocaleString()} – ${talent.salaryRange.max.toLocaleString()}
+              ${talent.salaryRange.min.toLocaleString()} –{" "}
+              ${talent.salaryRange.max.toLocaleString()}
             </span>
 
             <Button
               size="sm"
               onClick={handleShortlist}
               className={`px-4 py-1 text-sm font-semibold rounded-md shadow-md transition-all duration-300 
-                ${shortlisted
-                  ? "bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white"
-                  : "bg-gradient-to-r from-[#1E40AF] to-[#2563EB] hover:from-[#2563EB] hover:to-[#3B82F6] text-white"
+                ${
+                  shortlisted
+                    ? "bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white"
+                    : "bg-gradient-to-r from-[#1E40AF] to-[#2563EB] hover:from-[#2563EB] hover:to-[#3B82F6] text-white"
                 }`}
             >
               {shortlisted ? "Shortlisted" : "Shortlist"}

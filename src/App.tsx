@@ -112,9 +112,9 @@ const App = () => (
       <Sonner />
       <ParticleBackground />
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col">
+        <div className="flex flex-col overflow-visible min-h-screen">
           <Navigation />
-          <main className="flex-1 pt-16">
+          <main className="flex-1 pt-16 overflow-visible min-h-screen">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/talent-search" element={<TalentSearch />} />

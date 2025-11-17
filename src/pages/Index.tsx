@@ -81,93 +81,103 @@ const howItWorksSteps = [
     icon: Users
   }
 ];
+const stats = [
+  { label: "Success Rate", value: "92%", icon: Star },
+  { label: "Average Time to Hire", value: "14 days", icon: Target },
+  { label: "Cost Reduction", value: "60%", icon: Shield },
+  { label: "Client Satisfaction", value: "98%", icon: CheckCircle }
+];
 
   return (
     <div className="relative">
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-cosmic font-bold text-foreground mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="bg-gradient-nebula bg-clip-text text-transparent text-glow-lg">
-                <TypingAnimation text={t('hero.title')} />
-              </span>
-            </motion.h1>
+     
+<section className="relative isolate pt-20 pb-32 lg:pt-32 lg:pb-56 overflow-visible">
 
-            <motion.p
-              className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              {t('hero.subtitle')}
-            </motion.p>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center">
+     
+<motion.h1
+        className="text-4xl sm:text-5xl lg:text-6xl font-cosmic font-bold text-foreground mb-10 leading-normal overflow-visible"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <span className="bg-gradient-nebula bg-clip-text text-transparent text-glow-lg block overflow-visible whitespace-normal">
+          <TypingAnimation text={t('hero.title')} />
+        </span>
+      </motion.h1>
+      <motion.p
+        className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        {t('hero.subtitle')}
+      </motion.p>
 
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <Button variant="cosmic" size="xl" asChild>
-                <Link to="/talent-search" className="group">
-                  {t('hero.findTalent')}
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              <Button variant="cosmic-outline" size="xl" asChild>
-                <Link to="/for-talent">
-                  {t('hero.joinTalent')}
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
-        </div>
+      <motion.div
+        className="flex flex-col sm:flex-row gap-4 justify-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
+        <Button variant="cosmic" size="xl" asChild>
+          <Link to="/talent-search" className="group">
+            {t('hero.findTalent')}
+            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </Button>
 
-        {/* Decorative Elements */}
-        <div className="absolute top-1/4 left-10 w-20 h-20 bg-primary/20 rounded-full blur-xl animate-float" />
-        <div className="absolute top-1/2 right-10 w-32 h-32 bg-accent/20 rounded-full blur-xl animate-float" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-1/4 left-1/4 w-16 h-16 bg-primary/30 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }} />
-      </section>
+        <Button variant="cosmic-outline" size="xl" asChild>
+          <Link to="/for-talent">
+            {t('hero.joinTalent')}
+          </Link>
+        </Button>
+      </motion.div>
+    </div>
+  </div>
+
+  {/* Decorative Elements */}
+   <div className="absolute top-1/4 left-10 w-20 h-20 bg-primary/20 rounded-full blur-xl animate-float pointer-events-none -z-10" />
+  <div
+    className="absolute top-1/2 right-10 w-32 h-32 bg-accent/20 rounded-full blur-xl animate-float pointer-events-none -z-10"
+    style={{ animationDelay: "1s" }}
+  />
+  <div
+    className="absolute bottom-1/4 left-1/4 w-16 h-16 bg-primary/30 rounded-full blur-xl animate-float pointer-events-none -z-10"
+    style={{ animationDelay: "2s" }}
+  />
+</section> 
+
 
       {/* Stats Section */}
+      
       <section className="py-16 bg-card/20 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { key: 'talents', value: mockStats.talents, suffix: '+' },
-              { key: 'hires', value: mockStats.hires, suffix: '+' },
-              { key: 'companies', value: mockStats.companies, suffix: '+' },
-              { key: 'satisfaction', value: mockStats.satisfaction, suffix: '%' }
-            ].map((stat, index) => (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
               <motion.div
-                key={stat.key}
+                key={stat.label}
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="text-3xl lg:text-4xl mb-2">
-                  <CounterAnimation 
-                    end={stat.value} 
-                    suffix={stat.suffix}
-                    className="text-primary"
-                  />
+                <div className="w-12 h-12 bg-gradient-nebula rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <stat.icon className="w-6 h-6 text-white" />
                 </div>
-                <p className="text-muted-foreground">
-                  {t(`stats.${stat.key}`)}
-                </p>
+                <div className="text-2xl lg:text-3xl font-cosmic font-bold text-primary mb-1">
+                  {stat.value}
+                </div>
+                <p className="text-sm text-muted-foreground">{stat.label}</p>
               </motion.div>
             ))}
-          </div> */}
+          </div>
         </div>
       </section>
+     
 
       {/* Features Section */}
       <section className="py-20">

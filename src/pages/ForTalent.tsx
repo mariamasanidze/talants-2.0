@@ -234,6 +234,191 @@
 // export default ForTalent;
 
 
+// import { motion } from 'framer-motion';
+// import { ArrowRight, Users, Star, Globe, Clock, Award, TrendingUp } from 'lucide-react';
+// import { Button } from '@/components/ui/button';
+// import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+// import { useTranslation } from 'react-i18next';
+
+// const ForTalent = () => {
+//   const { t } = useTranslation();
+
+//   const benefits = [
+//     { icon: <Globe className="w-6 h-6" />, title: t('forTalent.benefits.global.title'), description: t('forTalent.benefits.global.description') },
+//     { icon: <Star className="w-6 h-6" />, title: t('forTalent.benefits.skill.title'), description: t('forTalent.benefits.skill.description') },
+//     { icon: <TrendingUp className="w-6 h-6" />, title: t('forTalent.benefits.growth.title'), description: t('forTalent.benefits.growth.description') },
+//     { icon: <Clock className="w-6 h-6" />, title: t('forTalent.benefits.flexibility.title'), description: t('forTalent.benefits.flexibility.description') },
+//     { icon: <Award className="w-6 h-6" />, title: t('forTalent.benefits.rate.title'), description: t('forTalent.benefits.rate.description') },
+//     { icon: <Users className="w-6 h-6" />, title: t('forTalent.benefits.match.title'), description: t('forTalent.benefits.match.description') }
+//   ];
+
+//   const stats = [
+//     { number: "500+", label: t('forTalent.stats.companies') },
+//     { number: "10,000+", label: t('forTalent.stats.placements') },
+//     { number: "95%", label: t('forTalent.stats.satisfaction') },
+//     { number: "150+", label: t('forTalent.stats.countries') }
+//   ];
+
+//   const steps = [
+//     { step: "01", title: t('forTalent.howItWorks.steps.apply.title'), description: t('forTalent.howItWorks.steps.apply.description') },
+//     { step: "02", title: t('forTalent.howItWorks.steps.evaluate.title'), description: t('forTalent.howItWorks.steps.evaluate.description') },
+//     { step: "03", title: t('forTalent.howItWorks.steps.match.title'), description: t('forTalent.howItWorks.steps.match.description') }
+//   ];
+
+//   return (
+//     <div className="min-h-screen">
+//       {/* Hero Section */}
+//       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+//         <div className="max-w-7xl mx-auto text-center">
+//           <motion.h1
+//             className="text-4xl md:text-6xl font-cosmic font-bold bg-gradient-nebula bg-clip-text text-transparent mb-6"
+//             initial={{ opacity: 0, y: 20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.8 }}
+//           >
+//             {t('forTalent.hero.title')}
+//           </motion.h1>
+
+//           <motion.p
+//             className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
+//             initial={{ opacity: 0, y: 20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.8, delay: 0.2 }}
+//           >
+//             {t('forTalent.hero.subtitle')}
+//           </motion.p>
+
+//           <motion.div
+//             initial={{ opacity: 0, y: 20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.8, delay: 0.4 }}
+//           >
+//             <Button variant="cosmic" size="lg" asChild className="group">
+//               <a href="/join-as-talent">
+//                 {t('forTalent.hero.button')}
+//                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+//               </a>
+//             </Button>
+//           </motion.div>
+//         </div>
+//       </section>
+
+//       {/* Stats Section */}
+//       <section className="py-16 px-4 sm:px-6 lg:px-8">
+//         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+//           {stats.map((stat, i) => (
+//             <motion.div
+//               key={i}
+//               className="text-center"
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ duration: 0.6, delay: i * 0.1 }}
+//             >
+//               <div className="text-3xl md:text-4xl font-cosmic font-bold text-primary mb-2">{stat.number}</div>
+//               <div className="text-muted-foreground">{stat.label}</div>
+//             </motion.div>
+//           ))}
+//         </div>
+//       </section>
+
+//       {/* Benefits Section */}
+//       <section className="py-20 px-4 sm:px-6 lg:px-8">
+//         <div className="max-w-7xl mx-auto text-center mb-16">
+//           <h2 className="text-3xl md:text-4xl font-cosmic font-bold text-foreground mb-4">
+//             {t('forTalent.benefitsSection.title')}
+//           </h2>
+//           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+//             {t('forTalent.benefitsSection.subtitle')}
+//           </p>
+//         </div>
+
+//         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+//           {benefits.map((benefit, i) => (
+//             <motion.div
+//               key={i}
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ duration: 0.6, delay: i * 0.1 }}
+//             >
+//               <Card className="cosmic-card h-full hover:scale-105 transition-transform duration-300">
+//                 <CardHeader>
+//                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary">
+//                     {benefit.icon}
+//                   </div>
+//                   <CardTitle>{benefit.title}</CardTitle>
+//                 </CardHeader>
+//                 <CardContent>
+//                   <p className="text-muted-foreground">{benefit.description}</p>
+//                 </CardContent>
+//               </Card>
+//             </motion.div>
+//           ))}
+//         </div>
+//       </section>
+
+//       {/* How It Works */}
+//       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+//         <div className="max-w-7xl mx-auto text-center mb-16">
+//           <h2 className="text-3xl md:text-4xl font-cosmic font-bold text-foreground mb-4">
+//             {t('forTalent.howItWorks.title')}
+//           </h2>
+//           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+//             {t('forTalent.howItWorks.subtitle')}
+//           </p>
+//         </div>
+
+//         <div className="grid md:grid-cols-3 gap-8">
+//           {steps.map((step, i) => (
+//             <motion.div
+//               key={step.step}
+//               className="text-center"
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ duration: 0.6, delay: i * 0.2 }}
+//             >
+//               <div className="w-16 h-16 bg-gradient-cosmic rounded-full flex items-center justify-center mx-auto mb-6">
+//                 <span className="text-2xl font-bold text-white">{step.step}</span>
+//               </div>
+//               <h3 className="text-xl font-semibold text-foreground mb-4">{step.title}</h3>
+//               <p className="text-muted-foreground">{step.description}</p>
+//             </motion.div>
+//           ))}
+//         </div>
+//       </section>
+
+//       {/* CTA Section */}
+//       <section className="py-20 px-4 sm:px-6 lg:px-8">
+//         <div className="max-w-4xl mx-auto text-center">
+//           <motion.div
+//             initial={{ opacity: 0, y: 20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.8 }}
+//           >
+//             <h2 className="text-3xl md:text-4xl font-cosmic font-bold text-foreground mb-6">
+//               {t('forTalent.cta.title')}
+//             </h2>
+//             <p className="text-xl text-muted-foreground mb-8">
+//               {t('forTalent.cta.subtitle')}
+//             </p>
+//             <Button variant="cosmic" size="lg" asChild className="group">
+//               <a href="/join-as-talent">
+//                 {t('forTalent.cta.button')}
+//                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+//               </a>
+//             </Button>
+//           </motion.div>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// };
+
+// export default ForTalent;
+
+
+// this one works 
+
+
 import { motion } from 'framer-motion';
 import { ArrowRight, Users, Star, Globe, Clock, Award, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -268,15 +453,29 @@ const ForTalent = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+      {/* <section className="relative py-32 lg:py-56 overflow-visible">
         <div className="max-w-7xl mx-auto text-center">
           <motion.h1
-            className="text-4xl md:text-6xl font-cosmic font-bold bg-gradient-nebula bg-clip-text text-transparent mb-6"
+            className="text-4xl md:text-6xl font-cosmic font-bold mb-6 georgian-safe-line overflow-visible"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            style={{ 
+              lineHeight: '1.5',
+              padding: '0.2em 0'
+            }}
           >
-            {t('forTalent.hero.title')}
+            <span 
+              className="bg-gradient-nebula bg-clip-text text-transparent"
+              style={{ 
+                display: 'inline',
+                padding: '0.05em 0.15em',
+                WebkitBoxDecorationBreak: 'clone',
+                boxDecorationBreak: 'clone'
+              }}
+            >
+              {t('forTalent.hero.title')}
+            </span>
           </motion.h1>
 
           <motion.p
@@ -301,7 +500,50 @@ const ForTalent = () => {
             </Button>
           </motion.div>
         </div>
-      </section>
+      </section> */}
+<section className="relative py-32 lg:py-56 overflow-visible">
+  <div className="max-w-7xl mx-auto text-center">
+    <motion.h1
+      className="text-4xl md:text-6xl font-cosmic font-bold mb-6 -mt-20 leading-[1.25] overflow-visible georgian-safe-line"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      <span 
+        className="bg-gradient-nebula bg-clip-text text-transparent inline-block leading-[1.25]"
+        style={{ 
+          padding: '0.05em 0.15em',
+          WebkitBoxDecorationBreak: 'clone',
+          boxDecorationBreak: 'clone'
+        }}
+      >
+        {t('forTalent.hero.title')}
+      </span>
+    </motion.h1>
+
+    <motion.p
+      className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.2 }}
+    >
+      {t('forTalent.hero.subtitle')}
+    </motion.p>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.4 }}
+    >
+      <Button variant="cosmic" size="lg" asChild className="group">
+        <a href="/join-as-talent">
+          {t('forTalent.hero.button')}
+          <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+        </a>
+      </Button>
+    </motion.div>
+  </div>
+</section>
 
       {/* Stats Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">

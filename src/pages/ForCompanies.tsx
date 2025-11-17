@@ -137,7 +137,8 @@ const features = [
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
+     <section className="relative py-20 lg:py-32 overflow-visible"> 
+      
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -145,14 +146,15 @@ const features = [
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              
-              <h1 className="text-4xl lg:text-5xl font-cosmic font-bold text-foreground mb-6">
-  {t('forCompanies.hero.title.part1')}{' '}
-  <span className="bg-gradient-nebula bg-clip-text text-transparent text-glow">
-    {t('forCompanies.hero.title.highlight')}
-  </span>{' '}
-  {t('forCompanies.hero.title.part2')}
+      <h1 className='text-4xl lg:text-5xl font-cosmic font-bold text-foreground mb-6 -mt-10  leading-[1.35]'>
+  იპოვე 
+  <span className="bg-gradient-nebula bg-clip-text text-transparent text-glow inline-block leading-[1.35] ">
+    საუკეთესო AI და Tech ტალანტი
+  </span>
+  რეკორდულ ყველაზე სწრაფად
 </h1>
+
+
 
               <p className="text-xl text-muted-foreground mb-8">
   {t('forCompanies.hero.subtitle')}
